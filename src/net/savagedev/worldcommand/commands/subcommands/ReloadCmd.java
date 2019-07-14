@@ -17,7 +17,7 @@ public class ReloadCmd implements SubCommand {
 
     @Override
     public void execute(CommandSender user, String[] args) {
-        this.plugin.reloadConfig();
+        this.plugin.reload();
         MessageUtils.message(user, String.format("&6%s &7v&6%s &7by&6 %s &7reloaded.", this.plugin.getDescription().getName(), this.plugin.getDescription().getVersion(), this.plugin.getDescription().getAuthors().get(0)));
     }
 
