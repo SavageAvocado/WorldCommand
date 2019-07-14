@@ -1,0 +1,18 @@
+error:
+  invalid-arguments: "&cInvalid arguments! Try /%command%"
+  invalid-world: "&cUnknown world! (%world%)"
+  no-permission: "&cYou do not have permission to execute this command."
+help:
+  - "&6WorldCommand &8»&7 Help:"
+  - "&8/&7wc help &8:&7 Displays this page."
+  - "&8/&7wc add <world> <command> &8:&7 Add a command to a world."
+  - "&8/&7wc list <world> &8:&7 List a world's commands."
+  - "&8/&7wc remove <world> <command> &8:&7 Remove a command from a world."
+  - "&8/&7wc reload &8:&7 Reload the config."
+success:
+  added-command: "&aSuccessfully added the command ''%command%'' to the world %world%"
+  removed-command: "&aSuccessfully removed the command ''%command%'' from the world %world%"
+  no-commands: "&cThe world %world% has no commands assigned."
+list:
+  header: "&6WorldCommand &8»&7 %world%'s commands:"
+  format: "&7/&a%command%"

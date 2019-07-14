@@ -1,0 +1,13 @@
+name: WorldCommand
+description: None.
+
+author: SavageAvocado.
+website: savagedev.net
+
+main: net.savagedev.worldcommand.WorldCommand
+version: 1.2
+
+commands:
+  worldcommand:
+    description: No.
+    aliases: ["wc"]

@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="WorldCommand:jar">
+    <output-path>E:/Servers/1.14.3/plugins</output-path>
+    <root id="archive" name="WorldCommand.jar">
+      <element id="module-output" name="WorldCommand" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/resource/config.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/resource/lang.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/resource/plugin.yml" />
+    </root>
+  </artifact>
+</component>

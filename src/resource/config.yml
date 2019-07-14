@@ -1,0 +1,9 @@
+world:
+  - say {player} joined the world {world_to}.
+  - say {player} left the world {world_from}.
+world_nether:
+  - say {player} joined the world {world_to}.
+  - say {player} left the world {world_from}.
+world_the_end:
+  - say {player} joined the world {world_to}.
+  - say {player} left the world {world_from}.
