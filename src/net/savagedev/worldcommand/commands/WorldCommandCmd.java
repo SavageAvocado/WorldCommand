@@ -69,7 +69,17 @@ public class WorldCommandCmd implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(@Nonnull CommandSender user, @Nonnull Command cmd, @Nonnull String d, @Nonnull String[] args) {
         if (args.length == 0) {
-            return new ArrayList<>(this.subCommands.keySet());
+            List<String> suggestions = new ArrayList<>();
+
+            for (String command : this.subCommands.keySet()) {
+                SubCommand subCommand = this.subCommands.get(command);
+
+                if (user.hasPermission(subCommand.getPermission())) {
+                    suggestions.add(command);
+                }
+            }
+
+            return suggestions;
         }
 
         String commandName = args[0].toLowerCase();
@@ -78,7 +88,9 @@ public class WorldCommandCmd implements CommandExecutor, TabCompleter {
             List<String> suggestions = new ArrayList<>();
 
             for (String command : this.subCommands.keySet()) {
-                if (command.startsWith(commandName)) {
+                SubCommand subCommand = this.subCommands.get(command);
+
+                if (command.startsWith(commandName) && user.hasPermission(subCommand.getPermission())) {
                     suggestions.add(command);
                 }
             }
@@ -86,6 +98,12 @@ public class WorldCommandCmd implements CommandExecutor, TabCompleter {
             return suggestions;
         }
 
-        return this.subCommands.get(commandName).onTabComplete(user, cmd, d, args);
+        SubCommand command = this.subCommands.get(commandName);
+
+        if (!user.hasPermission(command.getPermission())) {
+            return null;
+        }
+
+        return command.onTabComplete(user, cmd, d, args);
     }
 }
