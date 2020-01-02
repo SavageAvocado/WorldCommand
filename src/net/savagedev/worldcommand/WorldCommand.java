@@ -16,9 +16,9 @@ public class WorldCommand extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.loadConfig();
-        this.loadListeners();
-        this.loadCommands();
+        this.initConfig();
+        this.initListeners();
+        this.initCommands();
     }
 
     public void reload() {
@@ -26,17 +26,17 @@ public class WorldCommand extends JavaPlugin {
         this.reloadLang();
     }
 
-    private void loadConfig() {
+    private void initConfig() {
         this.saveDefaultConfig();
         this.saveResource("lang.yml", false);
         this.reloadLang();
     }
 
-    private void loadCommands() {
+    private void initCommands() {
         Objects.requireNonNull(this.getCommand("worldcommand")).setExecutor(new WorldCommandCmd(this));
     }
 
-    private void loadListeners() {
+    private void initListeners() {
         PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(new WorldChangeE(this), this);
         pluginManager.registerEvents(new JoinE(this), this);
@@ -47,18 +47,11 @@ public class WorldCommand extends JavaPlugin {
     }
 
     public FileConfiguration getConfig(ConfigType type) {
-        switch (type) {
-            case SETTINGS:
-                return super.getConfig();
-            case LANG:
-                return this.lang;
-            default:
-                return super.getConfig();
+        if (type == ConfigType.LANG) {
+            return this.lang;
         }
+        return super.getConfig();
     }
 
-    public enum ConfigType {
-        SETTINGS,
-        LANG
-    }
+    public enum ConfigType {SETTINGS, LANG}
 }

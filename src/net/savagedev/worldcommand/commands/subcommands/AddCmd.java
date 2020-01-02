@@ -2,20 +2,13 @@ package net.savagedev.worldcommand.commands.subcommands;
 
 import net.savagedev.worldcommand.WorldCommand;
 import net.savagedev.worldcommand.utils.MessageUtils;
-import org.bukkit.World;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("Duplicates")
-public class AddCmd implements SubCommand {
-    private final WorldCommand plugin;
-
-    public AddCmd(final WorldCommand plugin) {
-        this.plugin = plugin;
+public class AddCmd extends WorldManagementCommand {
+    public AddCmd(WorldCommand plugin) {
+        super(plugin);
     }
 
     @Override
@@ -37,14 +30,10 @@ public class AddCmd implements SubCommand {
             return;
         }
 
-        StringBuilder command = new StringBuilder();
-
-        for (int i = 2; i < args.length; i++) {
-            command.append(args[i]).append(" ");
-        }
+        final String command = super.buildCommand(args);
 
         List<String> commands = this.plugin.getConfig(WorldCommand.ConfigType.SETTINGS).getStringList(world);
-        commands.add(command.toString().trim());
+        commands.add(command);
 
         this.plugin.getConfig(WorldCommand.ConfigType.SETTINGS).set(world, commands);
 
@@ -53,35 +42,11 @@ public class AddCmd implements SubCommand {
             this.plugin.reloadConfig();
         });
 
-        MessageUtils.message(user, this.plugin.getConfig(WorldCommand.ConfigType.LANG).getString("success.added-command").replace("%command%", command.toString().trim()).replace("%world%", world));
+        MessageUtils.message(user, this.plugin.getConfig(WorldCommand.ConfigType.LANG).getString("success.added-command").replace("%command%", command).replace("%world%", world));
     }
 
     @Override
     public String getPermission() {
         return "wc.add";
-    }
-
-    @Override
-    public List<String> onTabComplete(@Nonnull CommandSender user, @Nonnull Command cmd, @Nonnull String d, @Nonnull String[] args) {
-        if (args.length == 1) {
-            List<String> suggestions = new ArrayList<>();
-
-            for (World world : this.plugin.getServer().getWorlds()) {
-                suggestions.add(world.getName());
-            }
-
-            return suggestions;
-        }
-
-        String worldIn = args[1].toLowerCase();
-        List<String> suggestions = new ArrayList<>();
-
-        for (World world : this.plugin.getServer().getWorlds()) {
-            if (world.getName().toLowerCase().startsWith(worldIn)) {
-                suggestions.add(world.getName());
-            }
-        }
-
-        return suggestions;
     }
 }

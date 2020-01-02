@@ -2,11 +2,7 @@ package net.savagedev.worldcommand.commands.subcommands;
 
 import net.savagedev.worldcommand.WorldCommand;
 import net.savagedev.worldcommand.utils.MessageUtils;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-
-import javax.annotation.Nonnull;
-import java.util.List;
 
 public class ReloadCmd implements SubCommand {
     private final WorldCommand plugin;
@@ -24,10 +20,5 @@ public class ReloadCmd implements SubCommand {
     @Override
     public String getPermission() {
         return "wc.reload";
-    }
-
-    @Override
-    public List<String> onTabComplete(@Nonnull CommandSender user, @Nonnull Command cmd, @Nonnull String d, @Nonnull String[] args) {
-        return null;
     }
 }

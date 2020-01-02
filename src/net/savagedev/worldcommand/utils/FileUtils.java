@@ -6,7 +6,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 
 public class FileUtils {
-    private FileUtils() { /* Just to prevent instantiation of this class. */ }
+    private FileUtils() {
+        throw new UnsupportedOperationException();
+    }
 
     public static FileConfiguration load(File file) {
         return YamlConfiguration.loadConfiguration(file);

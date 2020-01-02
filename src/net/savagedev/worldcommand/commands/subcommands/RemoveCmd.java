@@ -10,12 +10,9 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("Duplicates")
-public class RemoveCmd implements SubCommand {
-    private final WorldCommand plugin;
-
-    public RemoveCmd(final WorldCommand plugin) {
-        this.plugin = plugin;
+public class RemoveCmd extends WorldManagementCommand {
+    public RemoveCmd(WorldCommand plugin) {
+        super(plugin);
     }
 
     @Override
@@ -37,14 +34,10 @@ public class RemoveCmd implements SubCommand {
             return;
         }
 
-        StringBuilder command = new StringBuilder();
-
-        for (int i = 2; i < args.length; i++) {
-            command.append(args[i]).append(" ");
-        }
+        final String command = super.buildCommand(args);
 
         List<String> commands = this.plugin.getConfig(WorldCommand.ConfigType.SETTINGS).getStringList(world);
-        commands.remove(command.toString().trim());
+        commands.remove(command);
 
         this.plugin.getConfig(WorldCommand.ConfigType.SETTINGS).set(world, commands);
 
@@ -53,7 +46,7 @@ public class RemoveCmd implements SubCommand {
             this.plugin.reloadConfig();
         });
 
-        MessageUtils.message(user, this.plugin.getConfig(WorldCommand.ConfigType.LANG).getString("success.removed-command").replace("%command%", command.toString().trim()).replace("%world%", world));
+        MessageUtils.message(user, this.plugin.getConfig(WorldCommand.ConfigType.LANG).getString("success.removed-command").replace("%command%", command).replace("%world%", world));
     }
 
     @Override
@@ -64,13 +57,7 @@ public class RemoveCmd implements SubCommand {
     @Override
     public List<String> onTabComplete(@Nonnull CommandSender user, @Nonnull Command cmd, @Nonnull String d, @Nonnull String[] args) {
         if (args.length == 1) {
-            List<String> suggestions = new ArrayList<>();
-
-            for (World world : this.plugin.getServer().getWorlds()) {
-                suggestions.add(world.getName());
-            }
-
-            return suggestions;
+            return super.onTabComplete(user, cmd, d, args);
         }
 
         String worldIn = args[1].toLowerCase();
